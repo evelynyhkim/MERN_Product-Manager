@@ -7,9 +7,6 @@ import ProductList from './components/ProductList'
 import OneProduct from './components/OneProduct'
 
 function App() {
-  const serverUrl = 'http://localhost:8000'
-
-
   return (
     <div className="App">
       <Router>

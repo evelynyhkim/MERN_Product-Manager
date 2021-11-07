@@ -4,6 +4,8 @@ import axios from 'axios'
 import ProductList from './ProductList'
 
 function ProductForm() {
+	const [prodAddedToggle, setProdAddedToggle] = useState(false)
+    
 	const initialState = {
 		title: '',
 		price: '',
@@ -11,7 +13,8 @@ function ProductForm() {
 	}
 	
 	function reducer(state, action){
-		return {...state, [action.type]: action.payload}
+		if(action.type == 'reset') return initialState
+		else return {...state, [action.type]: action.payload}
 	}
 	
 	const [prod, dispatch] = useReducer(reducer, initialState)
@@ -30,6 +33,8 @@ function ProductForm() {
 		axios.post('http://localhost:8000/api/product/new', prod)
 		.then(res=>{
 			console.log(res.status, res.data)
+			dispatch({type:'reset'})
+			setProdAddedToggle(!prodAddedToggle)
 		})
 		.catch(function (error) {
 			if (error.response) {
@@ -58,7 +63,7 @@ function ProductForm() {
 		setProds(res.data)
 	  })
 	  .catch(err => console.log(err))
-	}, [])
+	}, [prodAddedToggle])
 	return (<>
 		<form>
 			<h1>Product Manager</h1>
