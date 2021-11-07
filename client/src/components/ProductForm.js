@@ -1,6 +1,7 @@
-import React, {useState, useReducer} from "react"
+import React, {useState, useReducer, useEffect} from "react"
 import styles from "./ProductForm.module.css"
 import axios from 'axios'
+import ProductList from './ProductList'
 
 function ProductForm() {
 	const initialState = {
@@ -48,7 +49,17 @@ function ProductForm() {
 			}
 		})
 	}
-	return (
+	const [prods, setProds] = useState([])
+
+	useEffect(()=>{
+	  axios.get('http://localhost:8000/api/products')
+	  .then(res=> {
+		console.log(res.data)
+		setProds(res.data)
+	  })
+	  .catch(err => console.log(err))
+	}, [])
+	return (<>
 		<form>
 			<h1>Product Manager</h1>
 			<p>
@@ -72,6 +83,8 @@ function ProductForm() {
 				/>
 			</p><p>{err}</p>
 		</form>
+		<ProductList prods={prods}/>
+		</>
 	)
 	//<p>{prod.title} {prod.price} {prod.description}</p>
 }

@@ -24,5 +24,13 @@ module.exports = {
             console.log(err)
             res.status(400).send({error: "something went wrong"})
         })
+    },
+    getOne: (req, res) => {
+        Product.findOne({_id: req.params.id})
+        .then(prod=>{
+            console.log('getOne', prod.title)
+            res.json(prod)
+        })
+        .catch(err=>console.log(err))
     }
 }
