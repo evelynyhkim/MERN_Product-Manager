@@ -10,7 +10,7 @@ function App() {
   useEffect(()=>{
     axios.get(serverUrl + '/api/products')
     .then(res=> {
-      console.log('api/products')
+      console.log(res.data)
     })
     .catch(err => console.log(err))
   }, [])
