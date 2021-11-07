@@ -1,23 +1,23 @@
-//import logo from './logo.svg';
 import './App.css';
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
+import ProductForm from './components/ProductForm'
 
 function App() {
-  const [msg, setMsg] = useState("hey")
+  const serverUrl = 'http://localhost:8000'
+
 
   useEffect(()=>{
-    axios.get('http://localhost:8000/api/products')
+    axios.get(serverUrl + '/api/products')
     .then(res=> {
       console.log('api/products')
-      setMsg(res.data)
     })
     .catch(err => console.log(err))
   }, [])
 
   return (
     <div className="App">
-      Product manager {msg}
+      <ProductForm/>
     </div>
   );
 }
