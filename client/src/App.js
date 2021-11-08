@@ -10,7 +10,7 @@ function App() {
   return (
     <div className="App">
       <Router>
-        <OneProduct path="/:id"/>
+        <OneProduct path=":id"/>
         <ProductForm path="/"/>
       </Router>
     </div>

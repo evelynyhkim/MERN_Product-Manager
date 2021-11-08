@@ -14,7 +14,7 @@ function OneProduct({id}) {
     }, [])
     return (<>
         <h2>{prod.title}</h2>
-        <p>Price: {prod.price}</p>
+        <p>Price: ${prod.price}</p>
         <p>Description: {prod.description}</p>
     </>)
 }
