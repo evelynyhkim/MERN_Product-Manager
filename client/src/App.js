@@ -1,25 +1,37 @@
 import './App.css';
-import React, {useState, useEffect} from 'react'
-import axios from 'axios'
-import ProductForm from './components/ProductForm'
+import React, {useState} from 'react'
+//import axios from 'axios'
+import {navigate, Router} from '@reach/router'
+import NewProduct from './components/NewProduct'
+import OneProduct from './components/OneProduct'
+import EditProduct from './components/EditProduct'
 
 function App() {
-  const serverUrl = 'http://localhost:8000'
+  
+  const [prodAddedToggle, setProdAddedToggle] = useState(false)
+  const [prods, setProds] = useState([])
 
-
-  useEffect(()=>{
-    axios.get(serverUrl + '/api/products')
-    .then(res=> {
-      console.log(res.data)
-    })
-    .catch(err => console.log(err))
-  }, [])
-
+  // function handleDelete(id){
+  //   axios.delete('http://localhost:8000/api/product/' + id + '/delete')
+  //   .then(res=>{
+  //       console.log('delete one prod')
+  //       //setProdAddedToggle(!prodAddedToggle)
+  //       //navigate('/')
+        
+  //       setProds(prods.filter(prod => prod._id !== id))
+  //   })
+  //   .catch(err=>console.log(err))
+//    return <DeleteProduct id={id}/>
   return (
     <div className="App">
-      <ProductForm/>
+      <Router>
+        <OneProduct path=":id" callback={()=>navigate('/')}/>
+        <EditProduct path=":id/edit" />
+        <NewProduct path="/" prods={prods} setProds={setProds} prodAddedToggle={prodAddedToggle} setProdAddedToggle={setProdAddedToggle}/>
+      </Router>
     </div>
   );
 }
+//<DeleteProduct path=":id/delete"/>
 
 export default App;
