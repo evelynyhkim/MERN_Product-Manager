@@ -1,10 +1,12 @@
 import React, {useState, useReducer} from "react"
-import styles from "./ProductForm.module.css"
+import styles from "./NewProduct.module.css"
 import axios from 'axios'
 import {navigate, Router, Link} from '@reach/router'
-import DeleteProduct from './DeleteProduct'
 
 function ProductList({prods, handleDelete}) {
+    function handleEdit(id){
+        navigate(`/${id}/edit`)
+    }
 
     return (
         prods.map((prod, idx)=>(
@@ -12,6 +14,10 @@ function ProductList({prods, handleDelete}) {
                 <Link to={`${prod._id}`} id={prod._id}>{prod.title}</Link>
                 <button onClick={()=>handleDelete(prod._id)} 
                     style={{marginLeft: "10px", height: "20px", padding: "3px"}}>Delete</button>
+                    
+                <button onClick={()=>handleEdit(prod._id)} 
+                    style={{marginLeft: "10px", height: "20px", padding: "3px"}}>Edit</button>
+                    
             </div>
     )))
 }

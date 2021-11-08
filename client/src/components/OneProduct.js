@@ -1,7 +1,6 @@
 import React, {useState, useReducer, useEffect} from "react"
-import styles from "./ProductForm.module.css"
 import axios from 'axios'
-import DeleteProduct from './DeleteProduct'
+import { navigate } from "@reach/router"
 
 function OneProduct({id, handleDelete}) {
     const [prod, setProd] = useState({})
@@ -18,6 +17,7 @@ function OneProduct({id, handleDelete}) {
         <p>Price: ${prod.price}</p>
         <p>Description: {prod.description}</p>
         <button onClick={()=>handleDelete(prod._id)}>Delete</button>
+        <button style = {{marginLeft: "10px"}} onClick={()=>navigate(`${prod._id}/edit`)}>Edit</button>
     </>)
 }
 export default OneProduct

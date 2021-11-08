@@ -2,11 +2,9 @@ import './App.css';
 import React, {useState, useEffect} from 'react'
 import axios from 'axios'
 import {navigate, Router} from '@reach/router'
-import ProductForm from './components/ProductForm'
-import ProductList from './components/ProductList'
+import NewProduct from './components/NewProduct'
 import OneProduct from './components/OneProduct'
 import EditProduct from './components/EditProduct'
-import DeleteProduct from './components/DeleteProduct'
 
 function App() {
   
@@ -27,7 +25,7 @@ function App() {
       <Router>
         <OneProduct path=":id" handleDelete={handleDelete}/>
         <EditProduct path=":id/edit" handleDelete={handleDelete}/>
-        <ProductForm path="/" handleDelete={handleDelete} prodAddedToggle={prodAddedToggle} setProdAddedToggle={setProdAddedToggle}/>
+        <NewProduct path="/" handleDelete={handleDelete} prodAddedToggle={prodAddedToggle} setProdAddedToggle={setProdAddedToggle}/>
       </Router>
     </div>
   );
