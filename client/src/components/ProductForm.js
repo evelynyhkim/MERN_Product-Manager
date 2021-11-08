@@ -2,15 +2,17 @@ import React, {useState, useReducer, useEffect} from "react"
 import styles from "./ProductForm.module.css"
 import axios from 'axios'
 import ProductList from './ProductList'
+import {navigate} from '@reach/router'
 
-function ProductForm() {
-	const [prodAddedToggle, setProdAddedToggle] = useState(false)
+function ProductForm({handleDelete, prodAddedToggle, setProdAddedToggle}) {
+	//const [prodAddedToggle, setProdAddedToggle] = useState(false)
     
 	const initialState = {
 		title: '',
 		price: '',
 		description: ''
 	}
+
 	
 	function reducer(state, action){
 		if(action.type == 'reset') return initialState
@@ -64,6 +66,9 @@ function ProductForm() {
 	  })
 	  .catch(err => console.log(err))
 	}, [prodAddedToggle])
+
+
+
 	return (<>
 		<form>
 			<h1>Product Manager</h1>
@@ -88,7 +93,7 @@ function ProductForm() {
 				/>
 			</p><p>{err}</p>
 		</form>
-		<ProductList prods={prods}/>
+		<ProductList prods={prods} handleDelete={handleDelete} setProdAddedToggle={setProdAddedToggle}/>
 		</>
 	)
 	//<p>{prod.title} {prod.price} {prod.description}</p>

@@ -34,9 +34,17 @@ module.exports = {
         .catch(err=>console.log(err))
     },
     editOne: (req, res) => {
-        Product.findOneAndUpdate({_id: req.params.id}, req.body)
+        Product.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, runValidators:true })
         .then(prod=>{
             console.log('editOne', prod.title)
+            res.json(prod)
+        })
+        .catch(err=>console.log(err))
+    },
+    deleteOne: (req, res) => {
+        Product.findOneAndDelete({_id: req.params.id})
+        .then(prod=>{
+            console.log('deleteOne')
             res.json(prod)
         })
         .catch(err=>console.log(err))
