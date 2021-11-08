@@ -9,13 +9,16 @@ import EditProduct from './components/EditProduct'
 function App() {
   
   const [prodAddedToggle, setProdAddedToggle] = useState(false)
+  const [prods, setProds] = useState([])
 
   function handleDelete(id){
     axios.delete('http://localhost:8000/api/product/' + id + '/delete')
     .then(res=>{
         console.log('delete one prod')
-        setProdAddedToggle(!prodAddedToggle)
-        navigate('/')
+        //setProdAddedToggle(!prodAddedToggle)
+        //navigate('/')
+        
+        setProds(prods.filter(prod => prod._id != id))
     })
     .catch(err=>console.log(err))
 //    return <DeleteProduct id={id}/>
@@ -25,7 +28,7 @@ function App() {
       <Router>
         <OneProduct path=":id" handleDelete={handleDelete}/>
         <EditProduct path=":id/edit" handleDelete={handleDelete}/>
-        <NewProduct path="/" handleDelete={handleDelete} prodAddedToggle={prodAddedToggle} setProdAddedToggle={setProdAddedToggle}/>
+        <NewProduct path="/" prods={prods} setProds={setProds} handleDelete={handleDelete} prodAddedToggle={prodAddedToggle} setProdAddedToggle={setProdAddedToggle}/>
       </Router>
     </div>
   );

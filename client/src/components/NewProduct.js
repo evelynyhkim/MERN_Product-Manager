@@ -4,7 +4,7 @@ import axios from 'axios'
 import ProductList from './ProductList'
 import ProductForm from './ProductForm'
 
-function NewProduct({handleDelete, prodAddedToggle, setProdAddedToggle}) {
+function NewProduct({prods, setProds, handleDelete, prodAddedToggle, setProdAddedToggle}) {
 	//const [prodAddedToggle, setProdAddedToggle] = useState(false)
     
 	const initialState = {
@@ -56,7 +56,6 @@ function NewProduct({handleDelete, prodAddedToggle, setProdAddedToggle}) {
 			}
 		})
 	}
-	const [prods, setProds] = useState([])
 
 	useEffect(()=>{
 	  axios.get('http://localhost:8000/api/products')
