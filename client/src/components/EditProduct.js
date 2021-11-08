@@ -1,5 +1,5 @@
 import React, {useState, useReducer, useEffect} from "react"
-import styles from "./NewProduct.module.css"
+//import styles from "./NewProduct.module.css"
 import axios from 'axios'
 import ProductForm from "./ProductForm"
 import {navigate} from '@reach/router'
@@ -14,8 +14,8 @@ function EditProduct({id}) {
 	}
 	
 	function reducer(state, action){
-		if(action.type == 'reset') return initialState
-        else if(action.type == 'currentProd') return currentProd
+		if(action.type === 'reset') return initialState
+        else if(action.type === 'currentProd') return currentProd
 		else return {...state, [action.type]: action.payload}
 	}
     const [currentProd, setCurrentProd] = useState(initialState)

@@ -1,8 +1,9 @@
 import React, {useState, useReducer, useEffect} from "react"
 import axios from 'axios'
 import { navigate } from "@reach/router"
+import DeleteButton from "./DeleteButton"
 
-function OneProduct({id, handleDelete}) {
+function OneProduct({id}) {
     const [prod, setProd] = useState({})
     useEffect(()=>{
         axios.get('http://localhost:8000/api/product/' + id)
@@ -16,8 +17,9 @@ function OneProduct({id, handleDelete}) {
         <h2>{prod.title}</h2>
         <p>Price: ${prod.price}</p>
         <p>Description: {prod.description}</p>
-        <button onClick={()=>handleDelete(prod._id)}>Delete</button>
         <button style = {{marginLeft: "10px"}} onClick={()=>navigate(`${prod._id}/edit`)}>Edit</button>
+        <DeleteButton id={prod._id} callback={()=>navigate('/')}/>
     </>)
 }
 export default OneProduct
+//<button onClick={()=>handleDelete(prod._id)}>Delete</button>

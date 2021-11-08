@@ -1,10 +1,10 @@
 import React, {useState, useReducer, useEffect} from "react"
-import styles from "./NewProduct.module.css"
+//import styles from "./NewProduct.module.css"
 import axios from 'axios'
 import ProductList from './ProductList'
 import ProductForm from './ProductForm'
 
-function NewProduct({prods, setProds, handleDelete, prodAddedToggle, setProdAddedToggle}) {
+function NewProduct({prodAddedToggle, setProdAddedToggle}) {
 	//const [prodAddedToggle, setProdAddedToggle] = useState(false)
     
 	const initialState = {
@@ -21,6 +21,9 @@ function NewProduct({prods, setProds, handleDelete, prodAddedToggle, setProdAdde
 	
 	const [prod, dispatch] = useReducer(reducer, initialState)
 	const [err, setErr] = useState("")
+	
+	const [prods, setProds] = useState([])
+
   
 	function handleChange(e){
 		const {name, value} = e.target
@@ -56,6 +59,12 @@ function NewProduct({prods, setProds, handleDelete, prodAddedToggle, setProdAdde
 			}
 		})
 	}
+	
+	function removeFromDom(id){
+		//setProds(prods.filter(prod => prod._id !== id))
+		let newArr = prods.filter(prod => prod._id != id)
+		setProds(newArr)
+	}
 
 	useEffect(()=>{
 	  axios.get('http://localhost:8000/api/products')
@@ -66,12 +75,11 @@ function NewProduct({prods, setProds, handleDelete, prodAddedToggle, setProdAdde
 	  .catch(err => console.log(err))
 	}, [prodAddedToggle])
 
-
-
 	return (<>
 		<h1>Product Manager</h1>
 		<ProductForm handleSubmit={handleNewProd} handleChange={handleChange} prod={prod} err={err}/>
-		<ProductList prods={prods} handleDelete={handleDelete} setProdAddedToggle={setProdAddedToggle}/>
+		<hr/>
+		<ProductList prods={prods} callback={removeFromDom} setProdAddedToggle={setProdAddedToggle}/>
 		</>
 	)
 	//<p>{prod.title} {prod.price} {prod.description}</p>
