@@ -1,6 +1,6 @@
 import styles from "./NewProduct.module.css"
 
-function ProductForm({handleSubmit, handleChange, prod, err}){
+function ProductForm({handleSubmit, handleChange, prod, errors}){
     return (
         <form>
 		 	<p>
@@ -8,7 +8,9 @@ function ProductForm({handleSubmit, handleChange, prod, err}){
 		 			Title
 		 		</label>
 		 	<input name="title" value = {prod.title} onChange = {handleChange} type="text" id="title" className={styles.textInput} /><br/>
-		 	</p><p>
+		 	</p>
+            {errors.title && <p>{errors.title.message}</p>}
+            <p>
 		 		<label htmlFor="price" style={{marginRight: "10px"}}>
 		 		Price
 		 	</label>
@@ -17,12 +19,17 @@ function ProductForm({handleSubmit, handleChange, prod, err}){
 		 		Description
 		 	</label>
 		 	<input name="description" value = {prod.description} onChange = {handleChange} type="text" id="description" className={styles.textInput} /><br/>
-		 	</p><p><input
+		 	</p>
+            <input type="checkbox" name="instock" checked={prod.instock} onChange={handleChange}/>
+            <label htmlFor="instock">In Stock?</label>
+            
+            <p><input
 		 		type="submit"
 		 		value="Submit"
 		 		onClick={handleSubmit}
 		 		/>
-		 	</p><p>{err}</p>
+		 	</p>
+            <p>{errors.message}</p>
 	    </form>
     )
 }

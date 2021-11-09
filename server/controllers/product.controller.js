@@ -7,7 +7,10 @@ module.exports = {
             console.log('getAll')
             res.json(prods)
         })
-        .catch(err=>console.log(err))
+        .catch(err=>{
+            console.log(err)
+            res.status(400).json(err)
+        })
     },
     createOne: (req, res) => {
         console.log('createOne')
@@ -22,7 +25,7 @@ module.exports = {
         .then(prod=>res.json(prod))
         .catch(err=>{
             console.log(err)
-            res.status(400).send({error: "something went wrong"})
+            res.status(400).json(err)
         })
     },
     getOne: (req, res) => {
@@ -31,7 +34,10 @@ module.exports = {
             console.log('getOne', prod.title)
             res.json(prod)
         })
-        .catch(err=>console.log(err))
+        .catch(err=>{
+            console.log(err)
+            res.status(400).json(err)
+        })
     },
     editOne: (req, res) => {
         Product.findOneAndUpdate({_id: req.params.id}, req.body, {new: true, runValidators:true })
@@ -39,7 +45,10 @@ module.exports = {
             console.log('editOne', prod.title)
             res.json(prod)
         })
-        .catch(err=>console.log(err))
+        .catch(err=>{
+            console.log(err)
+            res.status(400).json(err)
+        })
     },
     deleteOne: (req, res) => {
         Product.findOneAndDelete({_id: req.params.id})
@@ -47,6 +56,9 @@ module.exports = {
             console.log('deleteOne')
             res.json(prod)
         })
-        .catch(err=>console.log(err))
+        .catch(err=>{
+            console.log(err)
+            res.status(400).json(err)
+        })
     }
 }

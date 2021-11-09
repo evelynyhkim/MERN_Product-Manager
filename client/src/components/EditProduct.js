@@ -4,13 +4,13 @@ import axios from 'axios'
 import ProductForm from "./ProductForm"
 import {navigate} from '@reach/router'
 
-    
 function EditProduct({id}) {
     const [loaded, setLoaded] = useState(false)
 	const initialState = {
 		title: '',
 		price: '',
-		description: ''
+		description: '',
+        instock: false
 	}
 	
 	function reducer(state, action){
@@ -21,7 +21,7 @@ function EditProduct({id}) {
     const [currentProd, setCurrentProd] = useState(initialState)
     
     const [prod, dispatch] = useReducer(reducer, initialState)
-	const [err, setErr] = useState("")
+	const [err, setErr] = useState({})
 
     useEffect(()=>{
         axios.get('http://localhost:8000/api/product/' + id)
@@ -35,10 +35,12 @@ function EditProduct({id}) {
     }, [])
 
 	function handleChange(e){
-		const {name, value} = e.target
-		dispatch({
+		const {name, value, checked} = e.target
+		let payload = value
+        if(name=="instock") payload = checked
+        dispatch({
 			type: name,
-			payload: value
+			payload: payload
 		})
 	}
 	function handleEditProd(e) {
@@ -54,9 +56,8 @@ function EditProduct({id}) {
 			if (error.response) {
 			// The request was made and the server responded with a status code
 			// that falls out of the range of 2xx
-			console.log(error.response.data);
-			console.log(error.response.status);
-			console.log(error.response.headers);
+			    console.log(error.response.data.errors);
+                setErr(error.response.data.errors)
 			} else if (error.request) {
 			// The request was made but no response was received
 			// `error.request` is an instance of XMLHttpRequest in the browser and an instance of
@@ -70,7 +71,7 @@ function EditProduct({id}) {
 	}
 	return (<>
         <h2>Edit Product</h2>
-        {loaded && (<ProductForm handleSubmit={handleEditProd} prod={prod} handleChange={handleChange} err={err}/>
+        {loaded && (<ProductForm handleSubmit={handleEditProd} prod={prod} handleChange={handleChange} errors={err}/>
         )}
         </>)
 }
