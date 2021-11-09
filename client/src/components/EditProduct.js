@@ -37,7 +37,8 @@ function EditProduct({id}) {
 	function handleChange(e){
 		const {name, value, checked} = e.target
 		let payload = value
-        if(name=="instock") payload = checked
+        if(name=="instock") 
+            payload = checked
         dispatch({
 			type: name,
 			payload: payload

@@ -16,7 +16,7 @@ function ProductList({prods, callback}) {
 
     return (
         <table style={style}>
-        {prods.map((prod, idx)=>(
+        {prods && prods.map((prod, idx)=>(
              <tr key={idx} style={style}>
                 <td style={style}><Link to={`${prod._id}`} id={prod._id}>{prod.title}</Link>
                 </td>

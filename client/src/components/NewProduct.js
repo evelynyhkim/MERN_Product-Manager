@@ -10,12 +10,13 @@ function NewProduct({prodAddedToggle, setProdAddedToggle}) {
 	const initialState = {
 		title: '',
 		price: '',
-		description: ''
+		description: '',
+		instock: false
 	}
 
 	
 	function reducer(state, action){
-		if(action.type == 'reset') return initialState
+		if(action.type === 'reset') return initialState
 		else return {...state, [action.type]: action.payload}
 	}
 	
@@ -26,12 +27,15 @@ function NewProduct({prodAddedToggle, setProdAddedToggle}) {
 
   
 	function handleChange(e){
-		const {name, value} = e.target
-		dispatch({
+		const {name, value, checked} = e.target
+		let payload = value
+        if(name=="instock") payload = checked
+        dispatch({
 			type: name,
-			payload: value
+			payload: payload
 		})
 	}
+
 	function handleNewProd(e) {
 		e.preventDefault()
 		//console.log(prod)
@@ -71,12 +75,13 @@ function NewProduct({prodAddedToggle, setProdAddedToggle}) {
 		console.log(res.data)
 		setProds(res.data)
 	  })
-	  .catch(err => console.log(err))
+	  .catch(error => {console.log(error)
+		setErr(error.response.data.errors)})
 	}, [prodAddedToggle])
 
 	return (<>
 		<h1>Product Manager</h1>
-		<ProductForm handleSubmit={handleNewProd} handleChange={handleChange} prod={prod} err={err}/>
+		<ProductForm handleSubmit={handleNewProd} handleChange={handleChange} prod={prod} errors={err}/>
 		<hr/>
 		<ProductList prods={prods} callback={removeFromDom} setProdAddedToggle={setProdAddedToggle}/>
 		</>
